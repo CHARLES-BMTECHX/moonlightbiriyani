@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import cartService from "../services/cartService";
+import cartService from "../services/CartService";
 import { message } from "antd";
 
 const CartContext = createContext();
