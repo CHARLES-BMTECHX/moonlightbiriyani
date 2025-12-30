@@ -1,5 +1,5 @@
 // services/cartService.js
-import axiosInstance from './axiosInstance';
+import axiosInstance from './AxiosInstance';
 
 const cartService = {
   getMyCart: () => axiosInstance.get('/cart'),

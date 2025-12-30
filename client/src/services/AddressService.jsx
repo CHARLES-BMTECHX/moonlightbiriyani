@@ -1,4 +1,4 @@
-import axiosInstance from "./axiosInstance";
+import axiosInstance from "./AxiosInstance";
 
 const addressService = {
   // Create new address

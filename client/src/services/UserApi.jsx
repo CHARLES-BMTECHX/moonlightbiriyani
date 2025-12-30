@@ -1,4 +1,4 @@
-import axiosInstance from "./axiosInstance";
+import axiosInstance from "./AxiosInstance";
 
 export const getUsers = (params) =>
   axiosInstance.get("/auth/users", { params });

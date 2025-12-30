@@ -1,5 +1,5 @@
 // src/services/authService.js
-import axiosInstance from './axiosInstance';
+import axiosInstance from './AxiosInstance';
 
 const authService = {
   signup: (data) => axiosInstance.post('/auth/signup', data),
