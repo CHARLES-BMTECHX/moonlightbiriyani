@@ -70,7 +70,7 @@ app.use("/api/orders", require("./routes/OrderRoute"));
 app.use("/api/payment-details", require("./routes/PaymentDetailRoute"));
 app.use("/api/reviews", require("./routes/ReviewRoute"));
 app.use("/api/favorites", require("./routes/FavoriteRoute"));
-app.use("/api/hero-banners", require("./routes/heroBannerRoute"));
+app.use("/api/hero-banners", require("./routes/HeroBannerRoute"));
 app.use("/api/admin/dashboard", require("./routes/AdminDashboardRoute"));
 
 /* ───────────────── 404 Handler ───────────────── */
