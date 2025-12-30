@@ -29,7 +29,7 @@ const express = require("express");
 const router = express.Router();
 
 const { protect, admin } = require("../middleware/Auth");
-const upload = require("../middleware/productUpload"); // ← Now uses Cloudinary!
+const upload = require("../middleware/ProductUpload"); // ← Now uses Cloudinary!
 
 const {
   getProducts,
