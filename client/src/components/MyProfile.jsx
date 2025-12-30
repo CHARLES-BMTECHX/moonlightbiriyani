@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import authService from '../services/authService'; // Update path
+import authService from '../services/AuthService'; // Update path
 import { User, Mail, Phone, Lock, Save, Loader2, AlertCircle, CheckCircle } from 'lucide-react';
 
 const ProfilePage = () => {
