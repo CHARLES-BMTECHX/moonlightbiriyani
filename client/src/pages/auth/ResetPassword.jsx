@@ -8,7 +8,7 @@ import {
   XCircle
 } from "lucide-react";
 import { toast } from "react-toastify";
-import authService from "../../services/authService";
+import authService from "../../services/AuthService";
 
 const ResetPassword = () => {
   const { token } = useParams();

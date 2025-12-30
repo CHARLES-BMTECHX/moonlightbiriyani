@@ -5,7 +5,7 @@ import { MapPin, CreditCard, Banknote, QrCode, Plus, CheckCircle, Loader2 } from
 import { toast } from "react-toastify";
 
 // Services
-import addressService from "../services/addressService";
+import addressService from "../services/AddressService";
 import paymentService from "../services/PaymentDetailsService";
 import orderService from "../services/orderService";
 

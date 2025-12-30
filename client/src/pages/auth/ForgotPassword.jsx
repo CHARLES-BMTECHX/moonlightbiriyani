@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import authService from '../../services/authService';
+import authService from '../../services/AuthService';
 
 // Custom component to handle form validity and submission state
 const SubmitButton = ({ form, loading }) => {

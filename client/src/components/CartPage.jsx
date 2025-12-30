@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Trash2, Minus, Plus } from "lucide-react"; // Or use your icons
-import cartService from "../services/cartService";
+import cartService from "../services/CartService";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
