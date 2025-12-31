@@ -8,40 +8,46 @@ dotenv.config();
 
 const app = express();
 
-/* ───────────────── CORS Configuration (FINAL FIX) ───────────────── */
+/* ───────────────── 1. Essential Render Configuration ───────────────── */
+// Required for apps behind a proxy like Render/Heroku to handle HTTPS correctly
+app.set("trust proxy", 1);
+
+
+/* ───────────────── 2. CORS Configuration (Fixed) ───────────────── */
 
 const allowedOrigins = [
   "https://moonlightbriyani.com",
   "https://www.moonlightbriyani.com",
+  "http://localhost:3000", // Useful for local testing
+  "http://localhost:5173"  // Useful if you switch to Vite later
 ];
 
 const corsOptions = {
   origin: (origin, callback) => {
-    // ✅ Allow Postman / server-to-server
+    // Allow requests with no origin (like mobile apps, curl, or server-to-server)
     if (!origin) return callback(null, true);
 
-    const cleanOrigin = origin.replace(/\/$/, "");
-
-    if (allowedOrigins.includes(cleanOrigin)) {
-      // ✅ MUST return origin string (NOT true / false)
-      return callback(null, cleanOrigin);
+    // Check if the origin is in our allowed list
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.warn(`❌ CORS Blocked Request from: ${origin}`);
+      callback(new Error('Not allowed by CORS'));
     }
-
-    console.warn("❌ CORS blocked for:", cleanOrigin);
-
-    // ❌ Never return false (breaks CORS headers)
-    // ✅ Fallback to first allowed origin
-    return callback(null, allowedOrigins[0]);
   },
   credentials: true,
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 
-/* Apply CORS ONCE (IMPORTANT) */
+// Apply CORS Middleware
 app.use(cors(corsOptions));
 
-/* ───────────────── Global Middleware ───────────────── */
+// IMPORTANT: Handle Preflight Requests explicitly
+app.options("*", cors(corsOptions));
+
+
+/* ───────────────── 3. Global Middleware ───────────────── */
 
 app.use(morgan("dev"));
 app.use(express.json({ limit: "10mb" }));
@@ -50,7 +56,8 @@ app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 /* Static files */
 app.use("/uploads", express.static("uploads"));
 
-/* ───────────────── Database Connection ───────────────── */
+
+/* ───────────────── 4. Database Connection ───────────────── */
 
 mongoose
   .connect(process.env.MONGO_URI, {
@@ -63,7 +70,8 @@ mongoose
     process.exit(1);
   });
 
-/* ───────────────── Routes ───────────────── */
+
+/* ───────────────── 5. Routes ───────────────── */
 
 app.use("/api/auth", require("./routes/AuthRoute"));
 app.use("/api/products", require("./routes/ProductRoute"));
@@ -76,7 +84,8 @@ app.use("/api/favorites", require("./routes/FavoriteRoute"));
 app.use("/api/hero-banners", require("./routes/HeroBannerRoute"));
 app.use("/api/admin/dashboard", require("./routes/AdminDashboardRoute"));
 
-/* ───────────────── 404 Handler ───────────────── */
+
+/* ───────────────── 6. 404 Handler ───────────────── */
 
 app.use((req, res) => {
   res.status(404).json({
@@ -85,7 +94,8 @@ app.use((req, res) => {
   });
 });
 
-/* ───────────────── Global Error Handler ───────────────── */
+
+/* ───────────────── 7. Global Error Handler ───────────────── */
 
 app.use((err, req, res, next) => {
   console.error("🔥 Server Error:", err.message);
@@ -96,7 +106,8 @@ app.use((err, req, res, next) => {
   });
 });
 
-/* ───────────────── Start Server ───────────────── */
+
+/* ───────────────── 8. Start Server ───────────────── */
 
 const PORT = process.env.PORT || 5000;
 
