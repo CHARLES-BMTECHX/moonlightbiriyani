@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
-import Logo from "../assets/logo.jpg";
+import Logo from "../assets/logo.png";
 import CartIcon from "./CartIcon";
 
 const navLinks = [

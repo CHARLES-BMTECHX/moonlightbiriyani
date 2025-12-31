@@ -1,6 +1,7 @@
 const HeroBanner = require("../models/HeroBanner");
 const fs = require("fs");
 const path = require("path");
+const cloudinary =require("../config/cloudinary");
 
 // /* ================= CREATE ================= */
 // exports.createHeroBanner = async (req, res) => {
