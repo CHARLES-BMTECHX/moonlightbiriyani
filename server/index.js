@@ -1,4 +1,3 @@
-// index.js
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -9,34 +8,37 @@ dotenv.config();
 
 const app = express();
 
-/* ───────────────── CORS Configuration ───────────────── */
+/* ───────────────── CORS Configuration (FIXED) ───────────────── */
 
-// Allowed origins from .env
 const allowedOrigins = [
-  process.env.FRONTEND_URL,
-  process.env.PRODUCTION_URL,
-].filter(Boolean); // remove undefined/null
+  "https://moonlightbriyani.com",
+  "https://www.moonlightbriyani.com",
+];
 
 const corsOptions = {
-  origin: function (origin, callback) {
-    // Allow server-to-server / Postman / curl requests
+  origin: (origin, callback) => {
+    // Allow Postman / server-side requests
     if (!origin) return callback(null, true);
 
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      console.error("❌ CORS blocked for origin:", origin);
-      callback(new Error("Not allowed by CORS"));
+    const cleanOrigin = origin.replace(/\/$/, "");
+
+    if (allowedOrigins.includes(cleanOrigin)) {
+      return callback(null, true);
     }
+
+    console.error("❌ CORS blocked for:", cleanOrigin);
+
+    // IMPORTANT: do NOT throw error
+    return callback(null, false);
   },
   credentials: true,
-  methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 
 /* Apply CORS BEFORE routes */
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions)); // handle preflight requests
+app.options("*", cors(corsOptions));
 
 /* ───────────────── Global Middleware ───────────────── */
 
@@ -90,7 +92,6 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({
     success: false,
     message: err.message || "Something went wrong!",
-    ...(process.env.NODE_ENV === "development" && { stack: err.stack }),
   });
 });
 
@@ -99,6 +100,5 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`🌍 Environment: ${process.env.NODE_ENV || "development"}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
