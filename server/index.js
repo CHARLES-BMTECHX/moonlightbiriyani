@@ -8,7 +8,7 @@ dotenv.config();
 
 const app = express();
 
-/* ───────────────── CORS Configuration (FIXED) ───────────────── */
+/* ───────────────── CORS Configuration (FINAL FIX) ───────────────── */
 
 const allowedOrigins = [
   "https://moonlightbriyani.com",
@@ -17,28 +17,29 @@ const allowedOrigins = [
 
 const corsOptions = {
   origin: (origin, callback) => {
-    // Allow Postman / server-side requests
+    // ✅ Allow Postman / server-to-server
     if (!origin) return callback(null, true);
 
     const cleanOrigin = origin.replace(/\/$/, "");
 
     if (allowedOrigins.includes(cleanOrigin)) {
-      return callback(null, true);
+      // ✅ MUST return origin string (NOT true / false)
+      return callback(null, cleanOrigin);
     }
 
-    console.error("❌ CORS blocked for:", cleanOrigin);
+    console.warn("❌ CORS blocked for:", cleanOrigin);
 
-    // IMPORTANT: do NOT throw error
-    return callback(null, false);
+    // ❌ Never return false (breaks CORS headers)
+    // ✅ Fallback to first allowed origin
+    return callback(null, allowedOrigins[0]);
   },
   credentials: true,
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 
-/* Apply CORS BEFORE routes */
+/* Apply CORS ONCE (IMPORTANT) */
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
 
 /* ───────────────── Global Middleware ───────────────── */
 
