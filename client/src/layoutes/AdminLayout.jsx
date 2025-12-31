@@ -101,7 +101,7 @@ const AdminLayout = () => {
           />
           <img src={adminLogo} alt="logo" className="w-8 h-8 sm:w-10 sm:h-10 object-contain" />
           <div className="hidden sm:block font-bold text-[#672674] text-xl">
-            Moon light Biriyani
+            Moon light briyani
           </div>
         </div>
         <Button

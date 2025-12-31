@@ -67,11 +67,11 @@ const MyOrdersPage = () => {
     // 1. Company Logo/Title
     doc.setFontSize(20);
     doc.setTextColor(103, 38, 116);
-    doc.text("Moonlight Biriyani", 14, 22);
+    doc.text("Moonlight briyani", 14, 22);
 
     doc.setFontSize(10);
     doc.setTextColor(100);
-    doc.text("Authentic Biriyani & More", 14, 28);
+    doc.text("Authentic briyani & More", 14, 28);
 
     // 2. Invoice Label & Details
     doc.setFontSize(14);
@@ -129,7 +129,7 @@ const MyOrdersPage = () => {
     // 6. Footer
     doc.setFontSize(9);
     doc.setTextColor(150);
-    doc.text("Thank you for ordering from Moonlight Biriyani!", 105, 280, null, null, "center");
+    doc.text("Thank you for ordering from Moonlight briyani!", 105, 280, null, null, "center");
 
     // 7. Save File
     doc.save(`Invoice_${order.uniqueCode}.pdf`);

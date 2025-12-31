@@ -21,12 +21,12 @@ export default function AboutSection() {
         <div className="lg:w-1/2" data-aos="fade-right">
           <p className="text-[#672674] text-3xl font-dancing mb-2">About us</p>
           <h2 className="text-4xl md:text-5xl font-bold text-black font-opensans leading-tight mb-6" data-aos="fade-up">
-            Moonlight Biriyani <br /> Flavours After Dark
+            Moonlight briyani <br /> Flavours After Dark
           </h2>
           <p className="text-gray-600 text-base font-commissioner mb-8 leading-relaxed text-justify" data-aos="fade-up" data-aos-delay="200">
-            Moonlight Biriyani is a dedicated night-time culinary destination in Cuddalore, offering a diverse menu of authentic biriyanis, grills, and special midnight dishes. Our mission is to serve high-quality, flavour-rich food with exceptional customer satisfaction at the heart of everything we do.
+            Moonlight briyani is a dedicated night-time culinary destination in Cuddalore, offering a diverse menu of authentic briyanis, grills, and special midnight dishes. Our mission is to serve high-quality, flavour-rich food with exceptional customer satisfaction at the heart of everything we do.
             <br /><br />
-            From carefully selected spices to freshly prepared batches throughout the night, every detail reflects our commitment to taste and consistency. With exclusive night offers and a menu crafted to suit every food lover, Moonlight Biriyani stands as the perfect place to experience unforgettable flavours after dark.
+            From carefully selected spices to freshly prepared batches throughout the night, every detail reflects our commitment to taste and consistency. With exclusive night offers and a menu crafted to suit every food lover, Moonlight briyani stands as the perfect place to experience unforgettable flavours after dark.
           </p>
 
           {/* Contact */}
@@ -63,7 +63,7 @@ export default function AboutSection() {
           {/* Make sure to change the image source to a Biryani image if available */}
           <img
             src={MeatImage}
-            alt="Moonlight Biriyani Special"
+            alt="Moonlight briyani Special"
             className="w-full max-w-md sm:max-w-lg lg:max-w-md object-contain mx-auto"
           />
         </div>

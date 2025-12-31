@@ -13,7 +13,7 @@ const Footer = () => {
         <div className="flex flex-col items-start max-w-xs">
           <img src={FooterLogo} alt="BMTechx Logo" className="h-14 mb-3 rounded-full" />
           <p className="text-sm ">
-            Moonlight Biriyani is a dedicated night-time culinary destination in Cuddalore, offering a diverse menu of authentic biriyanis, grills, and special midnight dishes. Our mission is to serve high-quality, flavour-rich food with exceptional customer satisfaction at the heart of everything we do.
+            Moonlight briyani is a dedicated night-time culinary destination in Cuddalore, offering a diverse menu of authentic briyanis, grills, and special midnight dishes. Our mission is to serve high-quality, flavour-rich food with exceptional customer satisfaction at the heart of everything we do.
           </p>
         </div>
 
@@ -38,7 +38,7 @@ const Footer = () => {
          <div className='flex gap-2'>
              <FaMapMarkerAlt className="mr-2" size={30} />
           <p className="text-sm mb-4 flex items-center">
-            Moonlight Biriyani Truck,
+            Moonlight briyani Truck,
             Opposite to GRT,
             Near by Amma Unavagam, Velmurugan Cinema, Uzhavar Market,
             Chidhambaram Hightway,

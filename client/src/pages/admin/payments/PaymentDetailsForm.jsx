@@ -54,7 +54,7 @@ const PaymentDetailsForm = ({ data, onSubmit, loading }) => {
           rules={[{ required: true, message: "Required" }]}
           className="md:col-span-2" // Spans full width
         >
-          <Input size="large" placeholder="e.g. Moon Light Biriyani" />
+          <Input size="large" placeholder="e.g. Moon Light briyani" />
         </Form.Item>
 
         {/* UPI ID */}
