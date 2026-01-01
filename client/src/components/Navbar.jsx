@@ -25,16 +25,36 @@ const navLinks = [
   { label: "Home", path: "/" },
   { label: "About", path: "/#about" },
   { label: "Products", path: "/#services" },
-
 ];
 
 export default function NavbarSection() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const { user, loading, logout } = useContext(AuthContext);
+
   const toggleDrawer = (state) => () => setOpen(state);
 
-  // 🔹 Dropdown menu items (Lucide icons)
+  /* ✅ FIX: MOBILE HASH NAVIGATION HANDLER */
+  const handleMobileNav = (path) => {
+    setOpen(false);
+
+    if (path.includes("#")) {
+      const [route, hash] = path.split("#");
+
+      navigate(route || "/");
+
+      setTimeout(() => {
+        const el = document.getElementById(hash);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 300);
+    } else {
+      navigate(path);
+    }
+  };
+
+  // 🔹 Dropdown menu items
   const userMenuItems = [
     {
       key: "account",
@@ -66,9 +86,7 @@ export default function NavbarSection() {
       ),
       onClick: () => navigate("/orders"),
     },
-    {
-      type: "divider",
-    },
+    { type: "divider" },
     {
       key: "logout",
       label: (
@@ -100,12 +118,12 @@ export default function NavbarSection() {
               {link.label}
             </a>
           ))}
-          {/* 🛒 CART ICON */}
+
+          {/* Cart */}
           <CartIcon />
 
-          {/* 🔐 AUTH SECTION */}
+          {/* Auth Section */}
           {loading ? null : !user ? (
-            // NOT logged in
             <Button
               type="primary"
               size="large"
@@ -116,15 +134,17 @@ export default function NavbarSection() {
               Login
             </Button>
           ) : (
-            // Logged in
-            <Dropdown menu={{ items: userMenuItems }} placement="bottomRight" arrow>
+            <Dropdown
+              menu={{ items: userMenuItems }}
+              placement="bottomRight"
+              arrow
+            >
               <div className="flex items-center gap-2 cursor-pointer">
                 <Avatar icon={<User size={18} />} />
                 <span>{user.username || user.email}</span>
               </div>
             </Dropdown>
           )}
-
         </div>
 
         {/* Mobile Menu Icon */}
@@ -150,16 +170,14 @@ export default function NavbarSection() {
               <ListItem
                 key={link.label}
                 button
-                onClick={() => {
-                  navigate(link.path);
-                  setOpen(false);
-                }}
+                onClick={() => handleMobileNav(link.path)}
               >
                 <ListItemText primary={link.label} />
               </ListItem>
             ))}
           </List>
-          {/* 🛒 CART ICON */}
+
+          {/* Cart */}
           <CartIcon />
 
           {!user ? (
