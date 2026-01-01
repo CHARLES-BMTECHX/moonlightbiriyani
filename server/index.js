@@ -10,18 +10,18 @@ const app = express();
 /* ───────────────── 1. Trust Render Proxy ───────────────── */
 app.set("trust proxy", 1);
 
-/* ───────────────── 2. PRODUCTION CORS CONFIG ───────────────── */
+/* ───────────────── 2. CORS CONFIG (FIXED & SAFE) ───────────────── */
 const allowedOrigins = [
-  "https://moonlightbriyani.com",
-  "https://www.moonlightbriyani.com",
+  process.env.FRONTEND_URL,      // https://moonlightbriyani.com
+  process.env.PRODUCTION_URL,    // https://www.moonlightbriyani.com
   "http://localhost:3000"
 ];
 
 app.use((req, res, next) => {
   const origin = req.headers.origin;
 
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
+  if (!origin || allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin || "*");
   }
 
   res.setHeader("Vary", "Origin");
@@ -48,7 +48,16 @@ app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use("/uploads", express.static("uploads"));
 
-/* ───────────────── 4. Database Connection ───────────────── */
+/* ───────────────── 4. HEALTH CHECK API (IMPORTANT) ───────────────── */
+app.get("/", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "🚀 Moonlight Briyani API is running",
+    env: process.env.NODE_ENV
+  });
+});
+
+/* ───────────────── 5. Database Connection ───────────────── */
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB Connected"))
@@ -56,7 +65,7 @@ mongoose
     console.error("❌ MongoDB connection error:", err.message)
   );
 
-/* ───────────────── 5. Routes ───────────────── */
+/* ───────────────── 6. Routes ───────────────── */
 app.use("/api/auth", require("./routes/AuthRoute"));
 app.use("/api/products", require("./routes/ProductRoute"));
 app.use("/api/address", require("./routes/AddressRoute"));
@@ -68,7 +77,7 @@ app.use("/api/favorites", require("./routes/FavoriteRoute"));
 app.use("/api/hero-banners", require("./routes/HeroBannerRoute"));
 app.use("/api/admin/dashboard", require("./routes/AdminDashboardRoute"));
 
-/* ───────────────── 6. 404 Handler ───────────────── */
+/* ───────────────── 7. 404 Handler ───────────────── */
 app.use((req, res) => {
   res.status(404).json({
     success: false,
@@ -76,7 +85,7 @@ app.use((req, res) => {
   });
 });
 
-/* ───────────────── 7. Global Error Handler ───────────────── */
+/* ───────────────── 8. Global Error Handler ───────────────── */
 app.use((err, req, res, next) => {
   console.error("🔥 Server Error:", err.message);
   res.status(err.status || 500).json({
@@ -85,7 +94,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-/* ───────────────── 8. Start Server ───────────────── */
+/* ───────────────── 9. Start Server ───────────────── */
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
